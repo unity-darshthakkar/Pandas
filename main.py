@@ -62,3 +62,13 @@ df.to_csv('modified.csv', index=False)
 # print(df)
 
 # aggregate statistics (groupby)
+# df = pd.read_csv('modified.csv')
+# df['count'] = 1
+# print(df.groupby(['Type 1', 'Type 2']).count()['count'])
+
+# working with large amounts of data
+new_df = pd.DataFrame(columns=df.columns)
+for df in pd.read_csv('modified.csv', chunksize=5):
+    results = df.groupby(['Type 1']).count()
+    new_df = pd.concat([new_df, results])
+    print(new_df)
